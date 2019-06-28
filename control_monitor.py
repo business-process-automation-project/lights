@@ -32,10 +32,10 @@ def on_message(client, userdata, message):
     if message.topic == mqtt_topic1:
         content = json.loads(str(message.payload.decode("utf-8")))
 
-        qst = content["question"]
-        ans1 = content["answer1"]
-        ans2 = content["answer2"]
-        ans3 = content["answer3"]
+        qst = content["Question"]
+        ans1 = content["Answer"][0]["Text"]
+        ans2 = content["Answer"][1]["Text"]
+        ans3 = content["Answer"][2]["Text"]
 
         monitor1_html = re.sub('<!--QUESTION-->', qst, default_html)
         monitor1_html = re.sub('<!--ID-->', '1', monitor1_html)

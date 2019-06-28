@@ -78,12 +78,13 @@ def on_message(client, userdata, message):
             monitor2_html = default_html
             monitor3_html = default_html
 
-        with open(monitor1_f, 'w') as file:
-            file.write(monitor1_html)
-        with open(monitor2_f, 'w') as file:
-            file.write(monitor2_html)
-        with open(monitor3_f, 'w') as file:
-            file.write(monitor3_html)
+        if str(message.payload.decode("utf-8")) in ("answer1", "answer2", "answer3", "standard"):
+            with open(monitor1_f, 'w') as file:
+                file.write(monitor1_html)
+            with open(monitor2_f, 'w') as file:
+                file.write(monitor2_html)
+            with open(monitor3_f, 'w') as file:
+                file.write(monitor3_html)
 
     # requests.put(lights_url + '/lights/1/state', json={'on': True, 'alert': 'none'})
     # #if resp.status_code != 200:

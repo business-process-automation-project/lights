@@ -20,22 +20,22 @@ def on_message(client, userdata, message):
     print("message qos=", message.qos)
     print("message retain flag=", message.retain)
 
-    if str(message.payload.decode("utf-8")) == "blink":
+    if str(message.payload.decode("utf-8")) == "StarteSpiel":
         requests.put(lights_url + '/groups/1/action', json={"alert": "lselect"})
 
-    if str(message.payload.decode("utf-8")) == "answer1":
+    if str(message.payload.decode("utf-8")) == "Answer1":
         requests.put(lights_url + '/groups/1/action', json={"alert": "none"})
         requests.put(lights_url + '/groups/1/scenes/2/recall', json={})
 
-    if str(message.payload.decode("utf-8")) == "answer2":
+    if str(message.payload.decode("utf-8")) == "Answer2":
         requests.put(lights_url + '/groups/1/action', json={"alert": "none"})
         requests.put(lights_url + '/groups/1/scenes/3/recall', json={})
 
-    if str(message.payload.decode("utf-8")) == "answer3":
+    if str(message.payload.decode("utf-8")) == "Answer3":
         requests.put(lights_url + '/groups/1/action', json={"alert": "none"})
         requests.put(lights_url + '/groups/1/scenes/4/recall', json={})
 
-    if str(message.payload.decode("utf-8")) == "standard":
+    if str(message.payload.decode("utf-8")) == "DefaultLight":
         requests.put(lights_url + '/groups/1/action', json={"alert": "none"})
         requests.put(lights_url + '/groups/1/scenes/1/recall', json={})
 

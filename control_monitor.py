@@ -54,7 +54,7 @@ def on_message(client, userdata, message):
             file.write(monitor3_html)
 
     if message.topic == mqtt_topic2:
-        if str(message.payload.decode("utf-8")) == "answer1":
+        if str(message.payload.decode("utf-8")) == "Answer1":
             print("test")
             with open(monitor1_f, 'r') as file:
                 monitor1_html = file.read().replace('\n', '')
@@ -62,21 +62,21 @@ def on_message(client, userdata, message):
                 monitor1_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor1_html)
             with open(monitor1_f, 'w') as file:
                 file.write(monitor1_html)
-        if str(message.payload.decode("utf-8")) == "answer2":
+        if str(message.payload.decode("utf-8")) == "Answer2":
             with open(monitor2_f, 'r') as file:
                 monitor2_html = file.read().replace('\n', '')
                 monitor2_html = re.sub('<!--COLOR-->', 'color:green !important;', monitor2_html)
                 monitor2_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor2_html)
             with open(monitor2_f, 'w') as file:
                 file.write(monitor2_html)
-        if str(message.payload.decode("utf-8")) == "answer3":
+        if str(message.payload.decode("utf-8")) == "Answer3":
             with open(monitor3_f, 'r') as file:
                 monitor3_html = file.read().replace('\n', '')
                 monitor3_html = re.sub('<!--COLOR-->', 'color:green !important;', monitor3_html)
                 monitor3_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor3_html)
             with open(monitor3_f, 'w') as file:
                 file.write(monitor3_html)
-        if str(message.payload.decode("utf-8")) == "standard":
+        if str(message.payload.decode("utf-8")) == "DefaultLight":
             monitor1_html = default_html
             monitor2_html = default_html
             monitor3_html = default_html

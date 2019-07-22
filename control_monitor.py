@@ -18,9 +18,6 @@ monitor1_f = config['MONITOR']['monitor1']
 monitor2_f = config['MONITOR']['monitor2']
 monitor3_f = config['MONITOR']['monitor3']
 default_f = config['MONITOR']['default']
-# lights_raspbee = config['LIGHTS']['lights_raspbee']
-# lights_apikey = config['LIGHTS']['lights_apikey']
-# lights_url = 'http://' + lights_raspbee + '/api/' + lights_apikey
 
 
 def on_message(client, userdata, message):
@@ -32,10 +29,10 @@ def on_message(client, userdata, message):
     if message.topic == mqtt_topic1:
         content = json.loads(str(message.payload.decode("utf-8")))
 
-        qst = content["Question"]
-        ans1 = content["Answer"][0]["Text"]
-        ans2 = content["Answer"][1]["Text"]
-        ans3 = content["Answer"][2]["Text"]
+        qst = content["question"]
+        ans1 = content["answer1"]
+        ans2 = content["answer2"]
+        ans3 = content["answer3"]
 
         monitor1_html = re.sub('<!--QUESTION-->', qst, default_html)
         monitor1_html = re.sub('<!--ID-->', '1', monitor1_html)
@@ -56,48 +53,40 @@ def on_message(client, userdata, message):
         with open(monitor3_f, 'w') as file:
             file.write(monitor3_html)
 
-    if message.topic == mqtt_topic2 and os.path.exists(monitor1_f):
+    if message.topic == mqtt_topic2:
         if str(message.payload.decode("utf-8")) == "answer1":
             print("test")
             with open(monitor1_f, 'r') as file:
                 monitor1_html = file.read().replace('\n', '')
                 monitor1_html = re.sub('<!--COLOR-->', 'color:green !important;', monitor1_html)
                 monitor1_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor1_html)
+            with open(monitor1_f, 'w') as file:
+                file.write(monitor1_html)
         if str(message.payload.decode("utf-8")) == "answer2":
             with open(monitor2_f, 'r') as file:
                 monitor2_html = file.read().replace('\n', '')
                 monitor2_html = re.sub('<!--COLOR-->', 'color:green !important;', monitor2_html)
                 monitor2_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor2_html)
+            with open(monitor2_f, 'w') as file:
+                file.write(monitor2_html)
         if str(message.payload.decode("utf-8")) == "answer3":
             with open(monitor3_f, 'r') as file:
                 monitor3_html = file.read().replace('\n', '')
                 monitor3_html = re.sub('<!--COLOR-->', 'color:green !important;', monitor3_html)
                 monitor3_html = re.sub('<!--BCOLOR-->', 'border-color:green !important;', monitor3_html)
+            with open(monitor3_f, 'w') as file:
+                file.write(monitor3_html)
         if str(message.payload.decode("utf-8")) == "standard":
             monitor1_html = default_html
             monitor2_html = default_html
             monitor3_html = default_html
 
-        if str(message.payload.decode("utf-8")) in ("answer1", "answer2", "answer3", "standard"):
             with open(monitor1_f, 'w') as file:
                 file.write(monitor1_html)
             with open(monitor2_f, 'w') as file:
                 file.write(monitor2_html)
             with open(monitor3_f, 'w') as file:
                 file.write(monitor3_html)
-
-    # requests.put(lights_url + '/lights/1/state', json={'on': True, 'alert': 'none'})
-    # #if resp.status_code != 200:
-    #     # This means something went wrong.
-    #     # raise ApiError('GET /tasks/ {}'.format(resp.status_code))
-    # # for todo_item in resp.json():
-    #    # print('{} {}'.format(todo_item['id'], todo_item['summary']))
-    #
-    # print(resp.json())
-    # light = resp.json()
-    #
-    # print(light['1'])
-    # print('ID der LED: ' + light['1']['name'])
 
 
 with open(default_f, 'r') as file:
